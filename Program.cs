@@ -16,8 +16,9 @@ namespace OzonParser
 			builder.Services.AddRazorPages();
 			builder.Services.AddServerSideBlazor();
 
-			builder.Services.AddScoped<IProductsParserService, OzonParserService>();
+			builder.Services.AddScoped<IProductsParserService, OzonProductsParserService>();
 			builder.Services.AddScoped<IWebHtmlParser, WebEmulatorHtmlParser>();
+			builder.Services.AddScoped<IProductPageParser, OzonProductPageParser>();
 
 			var app = builder.Build();
 

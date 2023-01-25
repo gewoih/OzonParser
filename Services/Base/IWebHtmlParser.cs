@@ -2,6 +2,6 @@
 {
     public interface IWebHtmlParser
     {
-        public Task<string> GetHtmlAsync(string url);
+        public Task<string> GetHtmlAsync(string url, string? neededXpath = null);
     }
 }
