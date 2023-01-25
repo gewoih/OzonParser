@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using OzonParser.Services.Base;
+using OzonParser.Services.Parsing;
+using OzonParser.Services.Web;
 
 namespace OzonParser
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -12,6 +15,9 @@ namespace OzonParser
 			// Add services to the container.
 			builder.Services.AddRazorPages();
 			builder.Services.AddServerSideBlazor();
+
+			builder.Services.AddScoped<IProductsParserService, OzonParserService>();
+			builder.Services.AddScoped<IWebHtmlParser, WebEmulatorHtmlParser>();
 
 			var app = builder.Build();
 

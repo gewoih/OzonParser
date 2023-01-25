@@ -1,0 +1,25 @@
+﻿@using OzonParser.Services;
+@using OzonParser.Services.Base;
+
+@page "/ozon-parser"
+
+@inject IProductsParserService OzonParserService;
+
+<h3>OzonParsingPage</h3>
+
+<InputFile OnChange="@OnInputFileChanged"/>
+<button onclick="@(async () => await GetProducts())">Test</button>
+
+@code {
+
+
+    public async Task GetProducts()
+    {
+        var products = await OzonParserService.GetProductsAsync("женские сережки");
+    }
+
+    public async Task OnInputFileChanged(InputFileChangeEventArgs args)
+    {
+        
+    }
+}
