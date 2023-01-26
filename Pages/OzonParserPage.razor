@@ -1,25 +1,37 @@
-﻿@using OzonParser.Services;
+﻿@using OzonParser.Models;
+@using OzonParser.Services;
 @using OzonParser.Services.Base;
 
 @page "/ozon-parser"
 
 @inject IProductsParserService OzonParserService;
+@inject IProductsSaveManager ProductsSaveManager;
+@inject IJSRuntime JsRuntime;
 
 <h3>OzonParsingPage</h3>
 
-<InputFile OnChange="@OnInputFileChanged"/>
-<button onclick="@(async () => await GetProducts())">Test</button>
+<div>
+    <InputTextArea @bind-Value=_categoriesList></InputTextArea>
+    <button onclick="@(async () => await GetProducts())">Выгрузить товары</button>
+</div>
 
 @code {
+    private string _categoriesList;
 
-
-    public async Task GetProducts()
+    private async Task GetProducts()
     {
-        var products = await OzonParserService.GetProductsAsync("женские сережки");
-    }
+        if (string.IsNullOrEmpty(_categoriesList))
+            return;
 
-    public async Task OnInputFileChanged(InputFileChangeEventArgs args)
-    {
-        
+        var categories = _categoriesList.Split("\n");
+
+        var productsByCategories = new Dictionary<string, IEnumerable<Product>>();
+        foreach (var category in categories)
+        {
+            var categoryProducts = await OzonParserService.GetProductsAsync(category);
+            productsByCategories.Add(category, categoryProducts);
+        }
+
+        await ProductsSaveManager.SaveProductsAsync(productsByCategories);
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using OzonParser.Services.Base;
+using OzonParser.Services.Managers;
 using OzonParser.Services.Parsing;
 using OzonParser.Services.Web;
 
@@ -19,6 +20,7 @@ namespace OzonParser
 			builder.Services.AddScoped<IProductsParserService, OzonProductsParserService>();
 			builder.Services.AddScoped<IWebHtmlParser, WebEmulatorHtmlParser>();
 			builder.Services.AddScoped<IProductPageParser, OzonProductPageParser>();
+			builder.Services.AddScoped<IProductsSaveManager, ProductsCSVSaveManager>();
 
 			var app = builder.Build();
 
